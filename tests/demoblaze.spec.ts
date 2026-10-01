@@ -26,6 +26,8 @@ test.describe('Demoblaze E-shop Tests', () => {
   });
 
   test('Negative scenario: Overenie neexistujúceho tovaru', async ({ page }) => {
+    test.slow();
+
     const homePage = new HomePage(page);
     const data = testData.negativeScenario;
 
@@ -36,17 +38,26 @@ test.describe('Demoblaze E-shop Tests', () => {
 
     let hasNextPage = true;
 
-    // Explicitné overenie neviditeľnosti
     while (hasNextPage) {
-      await expect(productLocator).toBeHidden({ timeout: 3000 });
+      // Asertácia neprítomnosti na aktuálne zobrazenej stránke
+      await expect(productLocator).toBeHidden();
+
+      // Kontrola viditeľnosti tlačidla pre ďalšiu stránku
       const isNextVisible = await nextButton.isVisible();
+
       if (isNextVisible) {
-        // Inicializácia čakania na API volanie predtým, než sa klikne
-        const responsePromise = page.waitForResponse(response => 
-          response.url().includes('pagination') && response.status() === 200
+        try {
+          // Skrátený timeout na 5 sekúnd pre detekciu falošného tlačidla na poslednej stránke
+          const responsePromise = page.waitForResponse(response => 
+          response.url().includes('pagination') && response.status() === 200,
+          { timeout: 5000 }
         );
         await nextButton.click();
         await responsePromise;
+        } catch (error) {
+            // Ak odpoveď z backendu do 5 sekúnd nepríde, narazili sme na koniec paginácie
+            hasNextPage = false;
+        }
       } else {
         hasNextPage = false;
       }
