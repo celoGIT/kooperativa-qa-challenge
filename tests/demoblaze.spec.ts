@@ -39,15 +39,15 @@ test.describe('Demoblaze E-shop Tests', () => {
     let hasNextPage = true;
 
     while (hasNextPage) {
-      // Asertácia neprítomnosti na aktuálne zobrazenej stránke
+      // Assert absence on the current page
       await expect(productLocator).toBeHidden();
 
-      // Kontrola viditeľnosti tlačidla pre ďalšiu stránku
+      // Check visibility of the next page button
       const isNextVisible = await nextButton.isVisible();
 
       if (isNextVisible) {
         try {
-          // Skrátený timeout na 5 sekúnd pre detekciu falošného tlačidla na poslednej stránke
+          // 5-second timeout to detect false positive button on the last page
           const responsePromise = page.waitForResponse(response => 
           response.url().includes('pagination') && response.status() === 200,
           { timeout: 5000 }
@@ -55,7 +55,7 @@ test.describe('Demoblaze E-shop Tests', () => {
         await nextButton.click();
         await responsePromise;
         } catch (error) {
-            // Ak odpoveď z backendu do 5 sekúnd nepríde, narazili sme na koniec paginácie
+            // If no response from backend within 5 seconds, end of pagination is reached
             hasNextPage = false;
         }
       } else {

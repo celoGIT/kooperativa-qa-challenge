@@ -22,7 +22,7 @@ export class CartPage {
     }
 
         async getProductInCart(productName: string): Promise<Locator> {
-            // Vráti riadok v tabuľke košíka, ktorý obsahuje produkt
+            // Returns the cart table row containing the product
             return this.page.locator(`tr.success:has-text("${productName}")`);
     }
 

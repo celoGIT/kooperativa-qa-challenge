@@ -12,7 +12,7 @@ export class HomePage {
         }
 
         async selectProduct(productName: string) {
-            // Klikne na odkaz s presným názvom produktu
+            // Clicks the link with the exact product name
             await this.page.locator(`a:has-text("${productName}")`).click();
         }
 
