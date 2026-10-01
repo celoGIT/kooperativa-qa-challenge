@@ -1,0 +1,10 @@
+{
+"positiveScenario": {
+"productName": "Samsung galaxy s6",
+"expectedPrice": 360
+},
+"negativeScenario": {
+"productName": "NonExistent Laptop 5000",
+"expectedErrorMessage": "Item not found"
+}
+}
