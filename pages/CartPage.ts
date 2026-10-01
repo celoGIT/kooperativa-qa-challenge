@@ -11,9 +11,10 @@ export class CartPage {
         this.cartMenuLink = page.locator('#cartur');
     }
     async addToCart() {
-            // Demoblaze používa browser alert pri pridaní do košíka, je nutne ho automaticky potvrdiť
-            this.page.once('dialog', dialog => dialog.accept());
+            const dialogPromise = this.page.waitForEvent('dialog');
             await this.addToCartButton.click();
+            const dialog = await dialogPromise;
+            await dialog.accept();
     }
 
         async goToCart() {
