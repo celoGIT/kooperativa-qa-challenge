@@ -1,0 +1,11 @@
+-	udelat tc na vlozeni zbozi do kosiku
+-	playwright & typescript
+-	vybrat si jakykoliv eshop, vybrat zbozi, vlozit jej do kosiku, zkontrolovat, if je v kosiku spravne zbozi
+-	nastavit ci/cd pipelinu (nejakou free) a spustit z ni test.
+-	report
+-	readme file
+-	take jeden negativni scenar
+-	pom
+-	zbozi, co hledame je v test data filu (json)
+-	kratce popsat vas approach, challenges, and rozhodnuti, proc jste je tam resil
+
